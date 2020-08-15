@@ -5,9 +5,9 @@ const ejs = require('ejs');
 const path = require('path');
 const expressLayout = require('express-ejs-layouts');
 
-
+app.use(express.static('public'));
 // Set up template engine
-app.use(expressLayout);
+// app.use(expressLayout);
 app.set('views',path.join(__dirname,'/resources/views'));
 app.set('view engine','ejs');
 
