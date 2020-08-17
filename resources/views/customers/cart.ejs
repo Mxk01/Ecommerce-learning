@@ -1,0 +1,62 @@
+<%- include('../partials/header'); %>
+<%- include('../partials/navbar'); %>
+
+<% if(session.cart) { %>
+<section class="products">
+  <div class="d-flex flex-row">
+          <a class="nav-link" href="#"><img class="img-fluid" src="/img/cart-black.png"></a>
+          <h3 class="mt-2 mb-4">Order Summary</h3>
+  </div>
+  <hr>
+
+    <% for(let pizza of Object.values(session.cart.items)) { %>
+
+              <div class="card align-items-center d-flex flex-row" style="width: 30rem; margin:5px; padding:5px; background:#9c88ff; color:#f5f6fa;">
+              <img class="card-img-top" src="/img/<%=pizza.item.image%>" style="width:250px; height:250px" alt="Card image cap">
+              <div class="card-body">
+                <h5 class=" btn btn-warning card-title"><%=pizza.item.name%></h5>
+                <p class="  btn btn-warning card-text">Size : <%=pizza.item.size%></p>
+                <p class="  btn btn-warning card-text">Quantity : <%= pizza.qty %></p>
+                <p class="  btn btn-warning card-text">Price : <%= pizza.item.price * pizza.qty %> $</p>
+              </div>
+            </div>
+          <br>
+
+              <% } %>
+
+
+
+  <hr>
+  <div class="d-flex flex-row">
+  <h3 class="mr-4 ml-2">Total amount :</h3> <h3 class="mb-4"><%= session.cart.totalPrice %> $</h3>
+  </div>
+
+
+  <div class="d-flex justify-content-end mt-12">
+  <form action="d-flex flex-column">
+
+<div class="form-group">
+  <input  class="form-control" style="margin-left:-50px;" type="text" placeholder="Phone number">
+
+  </div>
+  <div class="form-group">
+  <input class=" form-control mr-4 mb-4" style="margin-left:-50px;" type="text" placeholder="Adress">
+    </div>
+  <button class="btn btn-warning" style="margin-left:-50px;" type="submit" name="button">Order now</button>
+  <a class="btn btn-primary mr-4" href="#">Login to continue</a>
+  </form>
+</div>
+
+</section>
+<% } else{ %>
+  <section class="empty-cart py-16">
+
+  <div class="d-flex flex-column mb-3 mt-3 justify-content-center" style="margin:50rem">
+  <h3>Empty cart!</h3>
+  <p class="text-secondary">You haven't ordered a pizza yet.Please go back to the main page to order one</p>
+  <img class="img-fluid mb-12 mt-4" src="/img/empty-cart.png" width="400px" height="650px"></img>
+
+  </div>
+  <a href="/" class="btn btn-warning text-light" style="margin-left:50rem">Go back</a>
+  </section>
+<% } %>
