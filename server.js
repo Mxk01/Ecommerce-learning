@@ -10,8 +10,20 @@ const session = require('express-session');
 const flash = require('express-flash');
 // require('./routes/web')(app)   - Router under the hood;
 const dotenv = require('dotenv');
+const passport = require('passport');
 const MongoDbStore = require('connect-mongo')(session); // To store session data into the db
+const initPassport  = require('./app/config/passport.js');
+
+
+
+
 dotenv.config();
+
+
+
+// For form data
+app.use(express.urlencoded({extended:false}));
+app.use(express.json());
 
 
 // Connect to mongoose
@@ -29,6 +41,14 @@ let mongoStore = new MongoDbStore(
   }
 )
 
+// Steps for using session :
+// Use session middleware;
+// Save session in database;
+// Set cookie lifetime
+// Set up your secret
+// Declare your session variables ( to store data in a session);
+// Set up res.locals variable for req.session ( so we can easily use session data in views) ;
+
 // Session config;
 app.use(session({
   secret:process.env.COOKIE_SECRET, // Secret is used to encrypt our data
@@ -40,11 +60,20 @@ app.use(session({
   // session:{maxAge:1000*15*600*24}
 }))
 
+// initPassport(passport);
+initPassport(passport);
+
+// We need this for using serializeUser and deserializeUser;
+app.use(passport.initialize());
+// We need this for session support ( storing,retrieving data from session );
+app.use(passport.session());
+
 
 
 // Setting up flash
 app.use(flash());
 
+// Setting up local variables
 app.use((req,res,next)=>{
   res.locals.session = req.session; // We set this up after setting up cart in the session to use it in the views and get cart data
   res.locals.error_msg = req.flash('error_msg');
@@ -52,12 +81,10 @@ app.use((req,res,next)=>{
   res.locals.username = req.flash('username');
   res.locals.email = req.flash('email');
   res.locals.password = req.flash('password');
+  res.locals.user = req.user; // Storing the user returned by req.logIn() in a local variable;
   next();
 });
 
-// For form data
-app.use(express.urlencoded({extended:false}));
-app.use(express.json());
 
 //  '/'
 app.use('/',webRoute);

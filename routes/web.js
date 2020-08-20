@@ -1,3 +1,69 @@
+
+const express = require('express');
+const router = express.Router();
+const {index} = require('../app/http/controllers/homeController');
+const {login,register,registerPost,loginPost,logOut} = require('../app/http/controllers/authController');
+const {showCart,updateCart} = require('../app/http/controllers/customers/cartController');
+const guest = require('../app/http/middleware/guest.js');
+
+router.get('/',index);
+router.get('/cart',showCart);
+router.get('/login',guest,login);
+router.get('/register',guest,register);
+
+
+router.post('/update-cart',updateCart);
+router.post('/login',loginPost);
+router.post('/register',registerPost);
+router.post('/logout',logOut);
+
+
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*  Router under the hood
 function initRoutes(app)
 {
@@ -17,19 +83,3 @@ function initRoutes(app)
 }
 module.exports = initApp;
 */
-const express = require('express');
-const router = express.Router();
-const {index} = require('../app/http/controllers/homeController');
-const {login,register,registerPost} = require('../app/http/controllers/authController');
-const {showCart,updateCart} = require('../app/http/controllers/customers/cartController');
-router.get('/',index);
-router.get('/cart',showCart);
-router.get('/login',login);
-router.get('/register',register);
-
-
-router.post('/update-cart',updateCart);
-
-router.post('/register',registerPost);
-
-module.exports = router;
