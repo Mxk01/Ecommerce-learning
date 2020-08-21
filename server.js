@@ -77,6 +77,7 @@ app.use(flash());
 app.use((req,res,next)=>{
   res.locals.session = req.session; // We set this up after setting up cart in the session to use it in the views and get cart data
   res.locals.error_msg = req.flash('error_msg');
+  res.locals.success_msg = req.flash('success_msg');
   // We use this to prepopulate the form with data;
   res.locals.username = req.flash('username');
   res.locals.email = req.flash('email');

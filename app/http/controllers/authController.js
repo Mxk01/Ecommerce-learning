@@ -50,7 +50,10 @@ When the login operation completes, user will be assigned to req.user
 
   }
   // If there's no error go back to main page
+  res.locals.user = req.user; 
+     console.log(req.user);
   return res.redirect('/');
+
   })
 
 })(req,res,next)
@@ -61,6 +64,7 @@ When the login operation completes, user will be assigned to req.user
   registerPost:async(req,res)=>{
     // Getting data from req.body;
    let {username,email,password} = req.body;
+
 
    // Flashing messages (then making res.locals variables in server.js);
    if(!username || !email || !password )

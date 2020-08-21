@@ -1,6 +1,5 @@
 <%- include('../partials/header'); %>
 <%- include('../partials/navbar'); %>
-
 <% if(session.cart) { %>
 <section class="products">
   <div class="d-flex flex-row">
@@ -32,19 +31,24 @@
   </div>
 
 
-  <div class="d-flex justify-content-end mt-12">
-  <form action="d-flex flex-column">
+  <div class="d-flex justify-content-end" style="margin:15px;">
 
+<% if(user){ %>
+  <form class="d-flex flex-column" action="/orders" method="POST">
 <div class="form-group">
-  <input  class="form-control" style="margin-left:-50px;" type="text" placeholder="Phone number">
+  <input  class="form-control" style="margin-left:-50px;"  name = "phone" type="text" placeholder="Phone number">
 
   </div>
   <div class="form-group">
-  <input class=" form-control mr-4 mb-4" style="margin-left:-50px;" type="text" placeholder="Adress">
+  <input class=" form-control mr-4 mb-4" name="address" style="margin-left:-50px;" type="text" placeholder="Adress">
     </div>
-  <button class="btn btn-warning" style="margin-left:-50px;" type="submit" name="button">Order now</button>
-  <a class="btn btn-primary mr-4" href="#">Login to continue</a>
-  </form>
+  <button type="submit" class="btn btn-warning" style="margin-left:-50px;" type="submit">Order now</button>
+    </form>
+<% } else { %>
+
+  <a class="btn btn-primary mr-4" href="/login">Login to order</a>
+<% } %>
+
 </div>
 
 </section>
